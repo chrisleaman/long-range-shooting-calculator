@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long Range Shooting Converter</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .converter-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .converter-section h2 {
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: flex-end;
+            margin-bottom: 15px;
+        }
+        
+        .input-field {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+        }
+        
+        .result {
+            background: #e8f4e8;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .result strong {
+            color: #2d6a2d;
+        }
+        
+        .formula {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .constants {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-top: 20px;
+        }
+        
+        .constants h3 {
+            margin-top: 0;
+            font-size: 0.95rem;
+        }
+        
+        .constants ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .constants li {
+            margin-bottom: 5px;
+        }
+        
+        .swap-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .swap-btn:hover {
+            background: #0056b3;
+        }
+        
+        @media (max-width: 600px) {
+            .input-field {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Long Range Shooting Converter</h1>
+    <p class="subtitle">Convert between MOA, MIL, inches, and millimetres</p>
+
+    <!-- MOA to MIL Converter -->
+    <div class="converter-section">
+        <h2>MOA ↔ MIL conversion</h2>
+        <div class="input-group">
+            <div class="input-field">
+                <label for="angular-value">Value</label>
+                <input type="number" id="angular-value" step="any" value="1" oninput="convertAngular()">
+            </div>
+            <div class="input-field">
+                <label for="angular-from">From</label>
+                <select id="angular-from" onchange="convertAngular()">
+                    <option value="moa">MOA</option>
+                    <option value="mil">MIL (mrad)</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="angular-to">To</label>
+                <select id="angular-to" onchange="convertAngular()">
+                    <option value="mil">MIL (mrad)</option>
+                    <option value="moa">MOA</option>
+                </select>
+            </div>
+            <button class="swap-btn" onclick="swapAngular()">↔ Swap</button>
+        </div>
+        <div class="result" id="angular-result">1 MOA = 0.2909 MIL</div>
+        <div class="formula">1 MIL = 3.4377 MOA | 1 MOA = 0.2909 MIL</div>
+    </div>
+
+    <!-- Angular to Linear Converter -->
+    <div class="converter-section">
+        <h2>Angular to linear (MOA/MIL → inches/mm at distance)</h2>
+        <div class="input-group">
+            <div class="input-field">
+                <label for="ang-lin-value">Angular value</label>
+                <input type="number" id="ang-lin-value" step="any" value="1" oninput="convertAngularToLinear()">
+            </div>
+            <div class="input-field">
+                <label for="ang-lin-unit">Unit</label>
+                <select id="ang-lin-unit" onchange="convertAngularToLinear()">
+                    <option value="moa">MOA</option>
+                    <option value="mil">MIL (mrad)</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="ang-lin-distance">Distance</label>
+                <input type="number" id="ang-lin-distance" step="any" value="100" oninput="convertAngularToLinear()">
+            </div>
+            <div class="input-field">
+                <label for="ang-lin-dist-unit">Distance unit</label>
+                <select id="ang-lin-dist-unit" onchange="convertAngularToLinear()">
+                    <option value="yards">Yards</option>
+                    <option value="metres">Metres</option>
+                </select>
+            </div>
+        </div>
+        <div class="result" id="ang-lin-result">
+            1 MOA at 100 yards = <strong>1.047 inches</strong> / <strong>26.60 mm</strong>
+        </div>
+    </div>
+
+    <!-- Linear to Angular Converter -->
+    <div class="converter-section">
+        <h2>Linear to angular (inches/mm → MOA/MIL at distance)</h2>
+        <div class="input-group">
+            <div class="input-field">
+                <label for="lin-ang-value">Linear value</label>
+                <input type="number" id="lin-ang-value" step="any" value="1" oninput="convertLinearToAngular()">
+            </div>
+            <div class="input-field">
+                <label for="lin-ang-unit">Unit</label>
+                <select id="lin-ang-unit" onchange="convertLinearToAngular()">
+                    <option value="inches">Inches</option>
+                    <option value="mm">Millimetres</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="lin-ang-distance">Distance</label>
+                <input type="number" id="lin-ang-distance" step="any" value="100" oninput="convertLinearToAngular()">
+            </div>
+            <div class="input-field">
+                <label for="lin-ang-dist-unit">Distance unit</label>
+                <select id="lin-ang-dist-unit" onchange="convertLinearToAngular()">
+                    <option value="yards">Yards</option>
+                    <option value="metres">Metres</option>
+                </select>
+            </div>
+        </div>
+        <div class="result" id="lin-ang-result">
+            1 inch at 100 yards = <strong>0.955 MOA</strong> / <strong>0.278 MIL</strong>
+        </div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="constants">
+        <h3>Reference constants</h3>
+        <ul>
+            <li><strong>1 MOA</strong> = 1.047 inches at 100 yards (true MOA)</li>
+            <li><strong>1 MIL</strong> = 3.6 inches at 100 yards / 10 cm at 100 metres</li>
+            <li><strong>1 MIL</strong> = 3.4377 MOA</li>
+            <li><strong>1 inch</strong> = 25.4 mm</li>
+            <li><strong>1 yard</strong> = 0.9144 metres</li>
+        </ul>
+    </div>
+
+    <script>
+        // Constants
+        const MOA_PER_MIL = 3.4377;
+        const INCHES_PER_MOA_AT_100YD = 1.047;
+        const INCHES_PER_MIL_AT_100YD = 3.6;
+        const MM_PER_INCH = 25.4;
+        const METRES_PER_YARD = 0.9144;
+
+        function convertAngular() {
+            const value = parseFloat(document.getElementById('angular-value').value) || 0;
+            const from = document.getElementById('angular-from').value;
+            const to = document.getElementById('angular-to').value;
+            
+            let result;
+            let fromLabel = from.toUpperCase();
+            let toLabel = to.toUpperCase();
+            
+            if (from === to) {
+                result = value;
+            } else if (from === 'moa' && to === 'mil') {
+                result = value / MOA_PER_MIL;
+            } else {
+                result = value * MOA_PER_MIL;
+            }
+            
+            document.getElementById('angular-result').innerHTML = 
+                `${value} ${fromLabel} = <strong>${result.toFixed(4)} ${toLabel}</strong>`;
+        }
+
+        function swapAngular() {
+            const from = document.getElementById('angular-from');
+            const to = document.getElementById('angular-to');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            convertAngular();
+        }
+
+        function convertAngularToLinear() {
+            const value = parseFloat(document.getElementById('ang-lin-value').value) || 0;
+            const unit = document.getElementById('ang-lin-unit').value;
+            const distance = parseFloat(document.getElementById('ang-lin-distance').value) || 0;
+            const distUnit = document.getElementById('ang-lin-dist-unit').value;
+            
+            // Convert distance to yards for calculation
+            let distanceYards = distance;
+            if (distUnit === 'metres') {
+                distanceYards = distance / METRES_PER_YARD;
+            }
+            
+            // Calculate inches
+            let inches;
+            if (unit === 'moa') {
+                inches = value * INCHES_PER_MOA_AT_100YD * (distanceYards / 100);
+            } else {
+                inches = value * INCHES_PER_MIL_AT_100YD * (distanceYards / 100);
+            }
+            
+            const mm = inches * MM_PER_INCH;
+            const unitLabel = unit.toUpperCase();
+            const distLabel = distUnit === 'yards' ? 'yards' : 'metres';
+            
+            document.getElementById('ang-lin-result').innerHTML = 
+                `${value} ${unitLabel} at ${distance} ${distLabel} = <strong>${inches.toFixed(3)} inches</strong> / <strong>${mm.toFixed(2)} mm</strong>`;
+        }
+
+        function convertLinearToAngular() {
+            const value = parseFloat(document.getElementById('lin-ang-value').value) || 0;
+            const unit = document.getElementById('lin-ang-unit').value;
+            const distance = parseFloat(document.getElementById('lin-ang-distance').value) || 0;
+            const distUnit = document.getElementById('lin-ang-dist-unit').value;
+            
+            // Convert to inches if needed
+            let inches = value;
+            if (unit === 'mm') {
+                inches = value / MM_PER_INCH;
+            }
+            
+            // Convert distance to yards for calculation
+            let distanceYards = distance;
+            if (distUnit === 'metres') {
+                distanceYards = distance / METRES_PER_YARD;
+            }
+            
+            // Avoid division by zero
+            if (distanceYards === 0) {
+                document.getElementById('lin-ang-result').innerHTML = 'Enter a distance greater than zero';
+                return;
+            }
+            
+            // Calculate MOA and MIL
+            const moa = inches / (INCHES_PER_MOA_AT_100YD * (distanceYards / 100));
+            const mil = inches / (INCHES_PER_MIL_AT_100YD * (distanceYards / 100));
+            
+            const unitLabel = unit === 'inches' ? 'inch' : 'mm';
+            const valueLabel = value === 1 ? unitLabel : (unit === 'inches' ? 'inches' : 'mm');
+            const distLabel = distUnit === 'yards' ? 'yards' : 'metres';
+            
+            document.getElementById('lin-ang-result').innerHTML = 
+                `${value} ${valueLabel} at ${distance} ${distLabel} = <strong>${moa.toFixed(3)} MOA</strong> / <strong>${mil.toFixed(3)} MIL</strong>`;
+        }
+
+        // Initialise on load
+        convertAngular();
+        convertAngularToLinear();
+        convertLinearToAngular();
+    </script>
+</body>
+</html>

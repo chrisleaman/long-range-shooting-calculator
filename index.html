@@ -11,7 +11,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             background: #f5f5f5;
@@ -26,7 +26,53 @@
         .subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+        }
+        
+        /* Tab styles */
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 4px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 20px;
+            border: none;
+            background: #e0e0e0;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 8px 8px 0 0;
+            transition: background 0.2s, color 0.2s;
+            position: relative;
+            bottom: -2px;
+        }
+        
+        .tab-btn:hover {
+            background: #d0d0d0;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            border: 2px solid #ddd;
+            border-bottom: 2px solid white;
+            color: #007bff;
+        }
+        
+        .tab-content {
+            display: none;
+            padding-top: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         .converter-section {
@@ -55,6 +101,11 @@
         .input-field {
             flex: 1;
             min-width: 120px;
+        }
+        
+        .input-field.narrow {
+            flex: 0.7;
+            min-width: 100px;
         }
         
         label {
@@ -90,12 +141,79 @@
             color: #2d6a2d;
         }
         
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .result-box {
+            background: #e8f4e8;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .result-box.single {
+            grid-column: 1 / -1;
+        }
+        
+        .result-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .result-box .value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d6a2d;
+        }
+        
+        .result-box .secondary {
+            font-size: 0.95rem;
+            color: #444;
+            margin-top: 5px;
+        }
+        
         .formula {
             font-size: 0.85rem;
             color: #666;
             margin-top: 10px;
             padding-top: 10px;
             border-top: 1px solid #eee;
+        }
+        
+        .info-box {
+            background: #f0f7ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .info-box h4 {
+            margin: 0 0 8px 0;
+            color: #0056b3;
+        }
+        
+        .info-box a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .info-box a:hover {
+            text-decoration: underline;
+        }
+        
+        .info-box.tip {
+            background: #fff8e6;
+            border-left-color: #f0a500;
+        }
+        
+        .info-box.tip h4 {
+            color: #c28400;
         }
         
         .constants {
@@ -134,129 +252,612 @@
             background: #0056b3;
         }
         
+        /* Collapsible sections */
+        .collapsible {
+            margin-top: 15px;
+        }
+        
+        .collapsible-header {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .collapsible-header:hover {
+            background: #eee;
+        }
+        
+        .collapsible-header .arrow {
+            transition: transform 0.2s;
+        }
+        
+        .collapsible-header.open .arrow {
+            transform: rotate(180deg);
+        }
+        
+        .collapsible-content {
+            display: none;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            padding: 15px;
+            background: white;
+            overflow-x: auto;
+        }
+        
+        .collapsible-content.open {
+            display: block;
+        }
+        
+        /* Reference tables */
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        
+        .ref-table th, .ref-table td {
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .ref-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .ref-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .ref-table .section-header {
+            background: #e8e8e8;
+            font-weight: 600;
+        }
+        
         @media (max-width: 600px) {
             .input-field {
                 min-width: 100%;
+            }
+            
+            .input-field.narrow {
+                min-width: 100%;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-btn {
+                padding: 10px 14px;
+                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
     <h1>Long Range Shooting Converter</h1>
-    <p class="subtitle">Convert between MOA, MIL, inches, and millimetres</p>
+    <p class="subtitle">Measurement conversions and precision calculations</p>
 
-    <!-- MOA to MIL Converter -->
-    <div class="converter-section">
-        <h2>MOA ↔ MIL conversion</h2>
-        <div class="input-group">
-            <div class="input-field">
-                <label for="angular-value">Value</label>
-                <input type="number" id="angular-value" step="any" value="1" oninput="convertAngular()">
-            </div>
-            <div class="input-field">
-                <label for="angular-from">From</label>
-                <select id="angular-from" onchange="convertAngular()">
-                    <option value="moa">MOA</option>
-                    <option value="mil">MIL (mrad)</option>
-                </select>
-            </div>
-            <div class="input-field">
-                <label for="angular-to">To</label>
-                <select id="angular-to" onchange="convertAngular()">
-                    <option value="mil">MIL (mrad)</option>
-                    <option value="moa">MOA</option>
-                </select>
-            </div>
-            <button class="swap-btn" onclick="swapAngular()">↔ Swap</button>
-        </div>
-        <div class="result" id="angular-result">1 MOA = 0.2909 MIL</div>
-        <div class="formula">1 MIL = 3.4377 MOA | 1 MOA = 0.2909 MIL</div>
-    </div>
-
-    <!-- Angular to Linear Converter -->
-    <div class="converter-section">
-        <h2>Angular to linear (MOA/MIL → inches/mm at distance)</h2>
-        <div class="input-group">
-            <div class="input-field">
-                <label for="ang-lin-value">Angular value</label>
-                <input type="number" id="ang-lin-value" step="any" value="1" oninput="convertAngularToLinear()">
-            </div>
-            <div class="input-field">
-                <label for="ang-lin-unit">Unit</label>
-                <select id="ang-lin-unit" onchange="convertAngularToLinear()">
-                    <option value="moa">MOA</option>
-                    <option value="mil">MIL (mrad)</option>
-                </select>
-            </div>
-            <div class="input-field">
-                <label for="ang-lin-distance">Distance</label>
-                <input type="number" id="ang-lin-distance" step="any" value="100" oninput="convertAngularToLinear()">
-            </div>
-            <div class="input-field">
-                <label for="ang-lin-dist-unit">Distance unit</label>
-                <select id="ang-lin-dist-unit" onchange="convertAngularToLinear()">
-                    <option value="yards">Yards</option>
-                    <option value="metres">Metres</option>
-                </select>
-            </div>
-        </div>
-        <div class="result" id="ang-lin-result">
-            1 MOA at 100 yards = <strong>1.047 inches</strong> / <strong>26.60 mm</strong>
+    <!-- Tab navigation -->
+    <div class="tab-container">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab('conversions', this)">Conversions</button>
+            <button class="tab-btn" onclick="switchTab('energy', this)">Bullet Kinetic Energy</button>
+            <button class="tab-btn" onclick="switchTab('topgun', this)">TOP Gun Precision</button>
         </div>
     </div>
 
-    <!-- Linear to Angular Converter -->
-    <div class="converter-section">
-        <h2>Linear to angular (inches/mm → MOA/MIL at distance)</h2>
-        <div class="input-group">
-            <div class="input-field">
-                <label for="lin-ang-value">Linear value</label>
-                <input type="number" id="lin-ang-value" step="any" value="1" oninput="convertLinearToAngular()">
+    <!-- Conversions Tab -->
+    <div id="conversions-tab" class="tab-content active">
+        
+        <!-- MOA to MIL Converter -->
+        <div class="converter-section">
+            <h2>MOA ↔ MIL conversion</h2>
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="angular-value">Value</label>
+                    <input type="number" id="angular-value" step="any" value="1" oninput="convertAngular()">
+                </div>
+                <div class="input-field">
+                    <label for="angular-from">From</label>
+                    <select id="angular-from" onchange="convertAngular()">
+                        <option value="moa">MOA</option>
+                        <option value="mil">MIL (mrad)</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="angular-to">To</label>
+                    <select id="angular-to" onchange="convertAngular()">
+                        <option value="mil">MIL (mrad)</option>
+                        <option value="moa">MOA</option>
+                    </select>
+                </div>
+                <button class="swap-btn" onclick="swapAngular()">↔ Swap</button>
             </div>
-            <div class="input-field">
-                <label for="lin-ang-unit">Unit</label>
-                <select id="lin-ang-unit" onchange="convertLinearToAngular()">
-                    <option value="inches">Inches</option>
-                    <option value="mm">Millimetres</option>
-                </select>
+            <div class="result" id="angular-result">1 MOA = 0.2909 MIL</div>
+            <div class="formula">1 MIL = 3.4377 MOA | 1 MOA = 0.2909 MIL</div>
+        </div>
+
+        <!-- Angular to Linear Converter -->
+        <div class="converter-section">
+            <h2>Angular to linear (MOA/MIL → inches/mm at distance)</h2>
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="ang-lin-value">Angular value</label>
+                    <input type="number" id="ang-lin-value" step="any" value="1" oninput="convertAngularToLinear()">
+                </div>
+                <div class="input-field">
+                    <label for="ang-lin-unit">Unit</label>
+                    <select id="ang-lin-unit" onchange="convertAngularToLinear()">
+                        <option value="moa">MOA</option>
+                        <option value="mil">MIL (mrad)</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="ang-lin-distance">Distance</label>
+                    <input type="number" id="ang-lin-distance" step="any" value="100" oninput="convertAngularToLinear()">
+                </div>
+                <div class="input-field">
+                    <label for="ang-lin-dist-unit">Distance unit</label>
+                    <select id="ang-lin-dist-unit" onchange="convertAngularToLinear()">
+                        <option value="yards">Yards</option>
+                        <option value="metres">Metres</option>
+                    </select>
+                </div>
             </div>
-            <div class="input-field">
-                <label for="lin-ang-distance">Distance</label>
-                <input type="number" id="lin-ang-distance" step="any" value="100" oninput="convertLinearToAngular()">
-            </div>
-            <div class="input-field">
-                <label for="lin-ang-dist-unit">Distance unit</label>
-                <select id="lin-ang-dist-unit" onchange="convertLinearToAngular()">
-                    <option value="yards">Yards</option>
-                    <option value="metres">Metres</option>
-                </select>
+            <div class="result" id="ang-lin-result">
+                1 MOA at 100 yards = <strong>1.047 inches</strong> / <strong>26.60 mm</strong>
             </div>
         </div>
-        <div class="result" id="lin-ang-result">
-            1 inch at 100 yards = <strong>0.955 MOA</strong> / <strong>0.278 MIL</strong>
+
+        <!-- Linear to Angular Converter -->
+        <div class="converter-section">
+            <h2>Linear to angular (inches/mm → MOA/MIL at distance)</h2>
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="lin-ang-value">Linear value</label>
+                    <input type="number" id="lin-ang-value" step="any" value="1" oninput="convertLinearToAngular()">
+                </div>
+                <div class="input-field">
+                    <label for="lin-ang-unit">Unit</label>
+                    <select id="lin-ang-unit" onchange="convertLinearToAngular()">
+                        <option value="inches">Inches</option>
+                        <option value="mm">Millimetres</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="lin-ang-distance">Distance</label>
+                    <input type="number" id="lin-ang-distance" step="any" value="100" oninput="convertLinearToAngular()">
+                </div>
+                <div class="input-field">
+                    <label for="lin-ang-dist-unit">Distance unit</label>
+                    <select id="lin-ang-dist-unit" onchange="convertLinearToAngular()">
+                        <option value="yards">Yards</option>
+                        <option value="metres">Metres</option>
+                    </select>
+                </div>
+            </div>
+            <div class="result" id="lin-ang-result">
+                1 inch at 100 yards = <strong>0.955 MOA</strong> / <strong>0.278 MIL</strong>
+            </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <div class="constants">
+            <h3>Reference constants</h3>
+            <ul>
+                <li><strong>1 MOA</strong> = 1.047 inches at 100 yards (true MOA)</li>
+                <li><strong>1 MIL</strong> = 3.6 inches at 100 yards / 10 cm at 100 metres</li>
+                <li><strong>1 MIL</strong> = 3.4377 MOA</li>
+                <li><strong>1 inch</strong> = 25.4 mm</li>
+                <li><strong>1 yard</strong> = 0.9144 metres</li>
+            </ul>
         </div>
     </div>
 
-    <!-- Quick Reference -->
-    <div class="constants">
-        <h3>Reference constants</h3>
-        <ul>
-            <li><strong>1 MOA</strong> = 1.047 inches at 100 yards (true MOA)</li>
-            <li><strong>1 MIL</strong> = 3.6 inches at 100 yards / 10 cm at 100 metres</li>
-            <li><strong>1 MIL</strong> = 3.4377 MOA</li>
-            <li><strong>1 inch</strong> = 25.4 mm</li>
-            <li><strong>1 yard</strong> = 0.9144 metres</li>
-        </ul>
+    <!-- Bullet Kinetic Energy Tab -->
+    <div id="energy-tab" class="tab-content">
+        
+        <div class="converter-section">
+            <h2>Bullet kinetic energy calculator</h2>
+            
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="bullet-weight">Bullet weight</label>
+                    <input type="number" id="bullet-weight" step="any" value="150" oninput="calculateEnergy()">
+                </div>
+                <div class="input-field narrow">
+                    <label for="weight-unit-energy">Unit</label>
+                    <select id="weight-unit-energy" onchange="calculateEnergy()">
+                        <option value="grains">Grains</option>
+                        <option value="grams">Grams</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="muzzle-velocity">Muzzle velocity</label>
+                    <input type="number" id="muzzle-velocity" step="any" value="2800" oninput="calculateEnergy()">
+                </div>
+                <div class="input-field narrow">
+                    <label for="velocity-unit">Unit</label>
+                    <select id="velocity-unit" onchange="calculateEnergy()">
+                        <option value="fps">Feet/sec (fps)</option>
+                        <option value="mps">Metres/sec (m/s)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="result-box single">
+                <h3>Kinetic energy</h3>
+                <div class="value" id="energy-ftlbf">2,611 ft·lbf</div>
+                <div class="secondary" id="energy-joules">3,541 J</div>
+            </div>
+            
+            <div class="info-box tip">
+                <h4>Using this with TOP Gun Precision</h4>
+                <p>
+                    The kinetic energy calculated here can be used directly as the "Bullet kinetic energy" input 
+                    in the <strong>TOP Gun Precision</strong> tab to estimate your rifle system's baseline precision.
+                </p>
+            </div>
+            
+            <div class="formula">
+                Formula: E = (m × v²) / 450,437 where m is in grains and v is in fps
+            </div>
+            
+            <!-- Typical Bullet Weights -->
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>Typical bullet weights by calibre</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Calibre</th>
+                                <th>Common weight(s)</th>
+                                <th>Weight range</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="section-header">
+                                <td colspan="3">Pistol</td>
+                            </tr>
+                            <tr>
+                                <td>.22 LR</td>
+                                <td>40 gr</td>
+                                <td>30–40 gr</td>
+                            </tr>
+                            <tr>
+                                <td>9mm Luger</td>
+                                <td>115 gr, 124 gr</td>
+                                <td>90–147+ gr</td>
+                            </tr>
+                            <tr>
+                                <td>.40 S&W</td>
+                                <td>165 gr, 180 gr</td>
+                                <td>105–200 gr</td>
+                            </tr>
+                            <tr>
+                                <td>.45 ACP</td>
+                                <td>230 gr</td>
+                                <td>68–300 gr</td>
+                            </tr>
+                            <tr class="section-header">
+                                <td colspan="3">Rifle</td>
+                            </tr>
+                            <tr>
+                                <td>.223 Rem / 5.56mm</td>
+                                <td>55 gr, 62 gr</td>
+                                <td>40–80+ gr</td>
+                            </tr>
+                            <tr>
+                                <td>6.5 Creedmoor</td>
+                                <td>140–150 gr</td>
+                                <td>95–150 gr</td>
+                            </tr>
+                            <tr>
+                                <td>.308 Win</td>
+                                <td>150 gr, 165 gr, 180 gr</td>
+                                <td>100–240 gr</td>
+                            </tr>
+                            <tr>
+                                <td>.30-06 Sprg</td>
+                                <td>150 gr, 165 gr, 180 gr</td>
+                                <td>110–220 gr</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Typical Muzzle Velocities -->
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>Typical muzzle velocities by calibre</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Calibre</th>
+                                <th>Velocity (fps)</th>
+                                <th>Velocity (m/s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="section-header">
+                                <td colspan="3">Pistol</td>
+                            </tr>
+                            <tr>
+                                <td>.380 ACP</td>
+                                <td>900–1,800 fps</td>
+                                <td>~275–550 m/s</td>
+                            </tr>
+                            <tr>
+                                <td>9mm</td>
+                                <td>900–1,500 fps</td>
+                                <td>~275–457 m/s</td>
+                            </tr>
+                            <tr>
+                                <td>.45 ACP</td>
+                                <td>750–1,300 fps</td>
+                                <td>~230–396 m/s</td>
+                            </tr>
+                            <tr class="section-header">
+                                <td colspan="3">Rifle</td>
+                            </tr>
+                            <tr>
+                                <td>.22 LR</td>
+                                <td>1,200–1,800 fps</td>
+                                <td>~366–550 m/s</td>
+                            </tr>
+                            <tr>
+                                <td>.223 / 5.56</td>
+                                <td>2,500–4,000 fps</td>
+                                <td>~762–1,219 m/s</td>
+                            </tr>
+                            <tr>
+                                <td>6.5 Creedmoor</td>
+                                <td>2,500–3,000 fps</td>
+                                <td>~762–914 m/s</td>
+                            </tr>
+                            <tr>
+                                <td>.308 Win</td>
+                                <td>2,500–3,500 fps</td>
+                                <td>~762–1,067 m/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP Gun Precision Tab -->
+    <div id="topgun-tab" class="tab-content">
+        
+        <div class="converter-section">
+            <h2>TOP Gun precision calculator</h2>
+            
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="bullet-energy">Bullet kinetic energy</label>
+                    <input type="number" id="bullet-energy" step="any" value="2400" oninput="calculateTOPGun()">
+                </div>
+                <div class="input-field narrow">
+                    <label for="energy-unit">Unit</label>
+                    <select id="energy-unit" onchange="calculateTOPGun()">
+                        <option value="ftlbf">ft·lbf</option>
+                        <option value="joules">Joules</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="rifle-weight">Rifle weight</label>
+                    <input type="number" id="rifle-weight" step="any" value="10" oninput="calculateTOPGun()">
+                </div>
+                <div class="input-field narrow">
+                    <label for="rifle-weight-unit">Unit</label>
+                    <select id="rifle-weight-unit" onchange="calculateTOPGun()">
+                        <option value="lbs">Pounds (lbs)</option>
+                        <option value="kg">Kilograms (kg)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="result-grid">
+                <div class="result-box">
+                    <h3>Precision (avg 5-shot extreme spread)</h3>
+                    <div class="value" id="precision-moa">1.200 MOA</div>
+                    <div class="secondary" id="precision-mil">0.349 MIL</div>
+                </div>
+                <div class="result-box">
+                    <h3>Mean radius</h3>
+                    <div class="value" id="mean-radius-in">0.514 inches</div>
+                    <div class="secondary" id="mean-radius-mm">13.05 mm</div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h4>About this calculation</h4>
+                <p>
+                    <strong>Precision (MOA)</strong> is calculated using the Applied Ballistics "TOP Gun" formula: 
+                    <em>Bullet Energy (ft·lbf) ÷ 200 ÷ Rifle Weight (lbs)</em>. 
+                    This estimates the average 5-shot extreme spread at 100 yards for a given rifle system. [2]
+                </p>
+                <p style="margin-top: 10px;">
+                    <strong>Mean radius</strong> represents the average distance of each shot from the centre of the group. 
+                    Unlike extreme spread (which only measures the two worst shots), mean radius accounts for every shot 
+                    in the group, making it more statistically meaningful—especially for smaller sample sizes. [2]
+                    The conversion uses a coefficient of 0.428 derived from simulation of approximately 1 million 5-shot groups. [2]
+                </p>
+                <p style="margin-top: 10px;">
+                    <a href="https://www.reddit.com/r/longrange/comments/1nfq1ms/top_gun_modified_to_output_mean_radius_and_back/" target="_blank">See this Reddit post for further details on the mean radius derivation →</a>
+                </p>
+            </div>
+            
+            <!-- Typical Energy Values -->
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>Typical bullet kinetic energy values</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Cartridge</th>
+                                <th>Muzzle energy (Joules)</th>
+                                <th>Muzzle energy (ft·lbf)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>9mm Parabellum</td>
+                                <td>~480 – 700 J</td>
+                                <td>~350 – 500 ft·lbf</td>
+                            </tr>
+                            <tr>
+                                <td>5.56 NATO (rifle)</td>
+                                <td>~1,700 – 1,800 J</td>
+                                <td>~1,250 – 1,330 ft·lbf</td>
+                            </tr>
+                            <tr>
+                                <td>.308 Winchester (rifle)</td>
+                                <td>~3,300 J</td>
+                                <td>~2,400 ft·lbf</td>
+                            </tr>
+                            <tr>
+                                <td>.30-06 Springfield (rifle)</td>
+                                <td>~3,000 – 4,000 J</td>
+                                <td>~2,000 – 3,000 ft·lbf</td>
+                            </tr>
+                            <tr>
+                                <td>.50 BMG (anti-materiel)</td>
+                                <td>~14,000 – 20,000 J</td>
+                                <td>~10,000 – 15,000 ft·lbf</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Typical Rifle Weights -->
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>Typical rifle weight ranges</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Application</th>
+                                <th>Weight range (lbs)</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lightweight/Backcountry hunting</td>
+                                <td>5 – 8 lbs</td>
+                                <td>Prioritises portability over long distances</td>
+                            </tr>
+                            <tr>
+                                <td>General hunting</td>
+                                <td>6 – 12 lbs</td>
+                                <td>Balance between portability and stability</td>
+                            </tr>
+                            <tr>
+                                <td>Tactical/Defence (M4, AR-15)</td>
+                                <td>6.5 – 10 lbs</td>
+                                <td>Robustness, reliability, manoeuvrability</td>
+                            </tr>
+                            <tr>
+                                <td>Varmint shooting</td>
+                                <td>7 – 10 lbs</td>
+                                <td>Compromise for long-range precision</td>
+                            </tr>
+                            <tr>
+                                <td>Target/Competition (PRS, Benchrest)</td>
+                                <td>10 – 25+ lbs</td>
+                                <td>Maximises stability, minimises recoil</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        // ============================================
         // Constants
+        // ============================================
         const MOA_PER_MIL = 3.4377;
         const INCHES_PER_MOA_AT_100YD = 1.047;
         const INCHES_PER_MIL_AT_100YD = 3.6;
         const MM_PER_INCH = 25.4;
         const METRES_PER_YARD = 0.9144;
+        const FTLBF_PER_JOULE = 0.737562;
+        const JOULES_PER_FTLBF = 1.355818;
+        const LBS_PER_KG = 2.20462;
+        const GRAINS_PER_GRAM = 15.4324;
+        const FPS_PER_MPS = 3.28084;
+        const ENERGY_CONSTANT = 450436.686; // 2 * 7000 grains/lb * 32.174 ft/s²
+        const MEAN_RADIUS_COEFFICIENT = 0.428;
+        const TOP_GUN_CONSTANT = 200;
 
+        // ============================================
+        // Tab switching
+        // ============================================
+        function switchTab(tabName, btn) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        // ============================================
+        // Collapsible sections
+        // ============================================
+        function toggleCollapsible(header) {
+            header.classList.toggle('open');
+            const content = header.nextElementSibling;
+            content.classList.toggle('open');
+        }
+
+        // ============================================
+        // Number formatting
+        // ============================================
+        function formatNumber(num, decimals = 0) {
+            return num.toLocaleString('en-AU', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            });
+        }
+
+        // ============================================
+        // Conversions tab functions
+        // ============================================
         function convertAngular() {
             const value = parseFloat(document.getElementById('angular-value').value) || 0;
             const from = document.getElementById('angular-from').value;
@@ -351,10 +952,89 @@
                 `${value} ${valueLabel} at ${distance} ${distLabel} = <strong>${moa.toFixed(3)} MOA</strong> / <strong>${mil.toFixed(3)} MIL</strong>`;
         }
 
+        // ============================================
+        // Bullet Kinetic Energy tab functions
+        // ============================================
+        function calculateEnergy() {
+            let weight = parseFloat(document.getElementById('bullet-weight').value) || 0;
+            const weightUnit = document.getElementById('weight-unit-energy').value;
+            let velocity = parseFloat(document.getElementById('muzzle-velocity').value) || 0;
+            const velocityUnit = document.getElementById('velocity-unit').value;
+            
+            // Convert weight to grains if in grams
+            let weightGrains = weight;
+            if (weightUnit === 'grams') {
+                weightGrains = weight * GRAINS_PER_GRAM;
+            }
+            
+            // Convert velocity to fps if in m/s
+            let velocityFps = velocity;
+            if (velocityUnit === 'mps') {
+                velocityFps = velocity * FPS_PER_MPS;
+            }
+            
+            // Calculate energy in ft·lbf: E = (m * v²) / 450,436.686
+            const energyFtLbf = (weightGrains * velocityFps * velocityFps) / ENERGY_CONSTANT;
+            const energyJoules = energyFtLbf * JOULES_PER_FTLBF;
+            
+            // Update display
+            document.getElementById('energy-ftlbf').textContent = formatNumber(energyFtLbf, 0) + ' ft·lbf';
+            document.getElementById('energy-joules').textContent = formatNumber(energyJoules, 0) + ' J';
+        }
+
+        // ============================================
+        // TOP Gun tab functions
+        // ============================================
+        function calculateTOPGun() {
+            let energy = parseFloat(document.getElementById('bullet-energy').value) || 0;
+            const energyUnit = document.getElementById('energy-unit').value;
+            let weight = parseFloat(document.getElementById('rifle-weight').value) || 0;
+            const weightUnit = document.getElementById('rifle-weight-unit').value;
+            
+            // Convert energy to ft·lbf if in Joules
+            let energyFtLbf = energy;
+            if (energyUnit === 'joules') {
+                energyFtLbf = energy * FTLBF_PER_JOULE;
+            }
+            
+            // Convert weight to lbs if in kg
+            let weightLbs = weight;
+            if (weightUnit === 'kg') {
+                weightLbs = weight * LBS_PER_KG;
+            }
+            
+            // Avoid division by zero
+            if (weightLbs === 0) {
+                document.getElementById('precision-moa').textContent = '—';
+                document.getElementById('precision-mil').textContent = '—';
+                document.getElementById('mean-radius-in').textContent = '—';
+                document.getElementById('mean-radius-mm').textContent = '—';
+                return;
+            }
+            
+            // Calculate precision (MOA) using TOP Gun formula
+            const precisionMOA = energyFtLbf / TOP_GUN_CONSTANT / weightLbs;
+            const precisionMIL = precisionMOA / MOA_PER_MIL;
+            
+            // Calculate mean radius
+            const meanRadiusInches = precisionMOA * MEAN_RADIUS_COEFFICIENT;
+            const meanRadiusMM = meanRadiusInches * MM_PER_INCH;
+            
+            // Update display
+            document.getElementById('precision-moa').textContent = precisionMOA.toFixed(3) + ' MOA';
+            document.getElementById('precision-mil').textContent = precisionMIL.toFixed(3) + ' MIL';
+            document.getElementById('mean-radius-in').textContent = meanRadiusInches.toFixed(3) + ' inches';
+            document.getElementById('mean-radius-mm').textContent = meanRadiusMM.toFixed(2) + ' mm';
+        }
+
+        // ============================================
         // Initialise on load
+        // ============================================
         convertAngular();
         convertAngularToLinear();
         convertLinearToAngular();
+        calculateEnergy();
+        calculateTOPGun();
     </script>
 </body>
 </html>

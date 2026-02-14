@@ -11,6 +11,6 @@
 !js/
 !js/**
 
-!simulate_es_mr.py
-!analyze_mr_distribution.py
+!scripts/
+!scripts/**
 

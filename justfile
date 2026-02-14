@@ -5,18 +5,9 @@
 default:
     @just --list
 
-# Run the ES to MR simulation (generates es_to_mr_table.js)
+# Run the ES to MR simulation (generates js/es-mr-data.js)
 simulate:
-    uv run simulate_es_mr.py
-
-# Run simulation with custom number of simulations (e.g., just simulate-custom 100000)
-simulate-custom n_sims:
-    uv run simulate_es_mr.py --simulations {{n_sims}}
-
-# Quick test run with fewer simulations (for development)
-simulate-quick:
-    @echo "Running quick simulation with 10,000 groups per sample size..."
-    @python -c "import simulate_es_mr; simulate_es_mr.n_simulations = 10000; simulate_es_mr.main()" 2>/dev/null || uv run python -c "exec(open('simulate_es_mr.py').read().replace('1_000_000', '10_000'))"
+    uv run scripts/simulate_es_mr.py
 
 # Open index.html in default browser (Windows)
 [windows]
@@ -34,4 +25,4 @@ serve port="8000":
 
 # Clean generated files
 clean:
-    rm -f es_to_mr_table.js
+    rm -f js/es-mr-data.js

@@ -30,6 +30,23 @@ h1 {
 /* Tab styles */
 .tab-container {
     margin-bottom: 20px;
+    position: relative;
+}
+
+.tab-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    background: linear-gradient(to right, transparent, #f5f5f5);
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.tab-container.scrolled-end::after {
+    opacity: 0;
 }
 
 .tab-buttons {
@@ -37,7 +54,14 @@ h1 {
     gap: 4px;
     border-bottom: 2px solid #ddd;
     padding-bottom: 0;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.tab-buttons::-webkit-scrollbar {
+    display: none;
 }
 
 .tab-btn {
@@ -51,6 +75,8 @@ h1 {
     transition: background 0.2s, color 0.2s;
     position: relative;
     bottom: -2px;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .tab-btn:hover {
@@ -573,42 +599,8 @@ input[type="number"]:focus, select:focus {
         grid-template-columns: 1fr;
     }
 
-    .tab-container {
-        position: relative;
-    }
-
-    .tab-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 32px;
-        background: linear-gradient(to right, transparent, #f5f5f5);
-        pointer-events: none;
-        transition: opacity 0.2s;
-    }
-
-    .tab-container.scrolled-end::after {
-        opacity: 0;
-    }
-
-    .tab-buttons {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding-bottom: 2px;
-    }
-
-    .tab-buttons::-webkit-scrollbar {
-        display: none;
-    }
-
     .tab-btn {
         padding: 10px 14px;
         font-size: 0.85rem;
-        flex-shrink: 0;
-        white-space: nowrap;
     }
 }

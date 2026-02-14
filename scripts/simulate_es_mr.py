@@ -31,6 +31,7 @@ Output: JavaScript object for copy-paste into index.html
 
 import json
 import sys
+from pathlib import Path
 from typing import Dict, Tuple
 
 import numpy as np
@@ -212,8 +213,9 @@ def main():
     # Output as JavaScript
     js_output = format_as_javascript(table)
 
-    # Save to file
-    output_file = "es_to_mr_table.js"
+    # Save to file (resolve path relative to project root)
+    project_root = Path(__file__).resolve().parent.parent
+    output_file = project_root / "js" / "es-mr-data.js"
     with open(output_file, "w") as f:
         f.write(js_output)
 

@@ -6,7 +6,11 @@
 
 !index.html
 !README.md
+!css/
+!css/**
+!js/
+!js/**
 
 !simulate_es_mr.py
-!es_to_mr_table.js
+!analyze_mr_distribution.py
 

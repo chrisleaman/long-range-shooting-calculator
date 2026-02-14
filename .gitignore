@@ -1,2 +1,12 @@
-﻿.idea
-.claude
+﻿# Ignore everything
+*
+
+# Except the .gitignore file itself
+!.gitignore
+
+!index.html
+!README.md
+
+!simulate_es_mr.py
+!es_to_mr_table.js
+
